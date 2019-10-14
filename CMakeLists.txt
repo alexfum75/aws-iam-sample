@@ -1,0 +1,23 @@
+cmake_minimum_required(VERSION 3.5)
+
+project(iam-sample)
+
+set(CMAKE_CXX_STANDARD 11)
+
+set(CMAKE_CXX_STANDARD_REQUIRED True)
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${SSE_FLAGS} -march=native  -std=c++0x") 
+
+include_directories(/home/itam/aws-sdk-cpp /home/itam/aws-sdk-cpp/aws-cpp-sdk-core/include /home/itam/aws-sdk-cpp/aws-cpp-sdk-iam/include)
+
+set(aws-sdk-cpp_DIR $ENV{AWS_SDK_CPP_DIR})
+
+#this will locate the aws sdk for c++ package so that we can use its targets
+find_package(aws-sdk-cpp)
+
+add_executable(iam-sample main.cpp)
+
+#since we called find_package(), this will resolve all dependencies, header files, and cflags necessary
+#to build and link your executable. 
+target_link_libraries(iam-sample aws-cpp-sdk-iam aws-cpp-sdk-core)
+
